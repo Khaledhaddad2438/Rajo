@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Rajo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg0:#07080D; --bg1:#0D1018; --glass:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.12);
+  --accent:#6EE7FF; --accent2:#7C5CFF; --green:#2BD67B;
+  --orange:#FFA53D; --red:#FF5C6C; --purple:#B388FF;
+  --text:#F3F5FA; --muted:#9BA3B5;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0;}
+html,body{
+  background:linear-gradient(180deg,var(--bg0),var(--bg1));
+  color:var(--text);font-family:'Cairo',sans-serif;
+  min-height:100vh;overflow-x:hidden;
+  -webkit-user-select:none;user-select:none;
+}
+body{padding:14px 12px 90px;}
+.hidden{display:none !important;}
+
+/* ---------- الشعار ---------- */
+.logo-wrap{text-align:center;margin:6px 0 12px;}
+.logo-title{
+  font-size:42px;font-weight:900;letter-spacing:1px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  line-height:1;
+}
+.logo-sub{
+  font-size:11px;letter-spacing:8px;color:var(--muted);
+  margin-top:4px;font-weight:600;
+}
+.logo-wrap.compact .logo-title{font-size:30px;}
+.logo-wrap.compact .logo-sub{font-size:9px;letter-spacing:6px;}
+
+/* ---------- البحث ---------- */
+.search-wrap{position:relative;margin-bottom:12px;}
+.search-input{
+  width:100%;padding:16px 48px 16px 16px;
+  background:var(--glass);border:1px solid var(--border);
+  border-radius:18px;color:var(--text);font-size:16px;
+  font-family:'Cairo',sans-serif;outline:none;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  transition:border-color .2s;
+}
+.search-input:focus{border-color:var(--accent);}
+.search-input::placeholder{color:var(--muted);}
+.search-icon{
+  position:absolute;top:50%;right:16px;transform:translateY(-50%);
+  color:var(--accent);font-size:20px;pointer-events:none;
+}
+
+/* ---------- قائمة الزبائن ---------- */
+.list{display:flex;flex-direction:column;gap:8px;}
+.cust-row{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;background:var(--glass);
+  border:1px solid var(--border);border-radius:16px;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  transition:transform .1s,background .15s;cursor:pointer;
+}
+.cust-row:active{transform:scale(0.98);background:rgba(255,255,255,0.1);}
+.dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.dot.green{background:var(--green);box-shadow:0 0 8px var(--green);}
+.dot.orange{background:var(--orange);box-shadow:0 0 8px var(--orange);}
+.dot.red{background:var(--red);box-shadow:0 0 8px var(--red);}
+.dot.purple{background:var(--purple);box-shadow:0 0 8px var(--purple);}
+.cust-info{flex:1;min-width:0;}
+.cust-name{font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cust-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.cust-amount{font-size:15px;font-weight:700;flex-shrink:0;}
+
+/* ---------- بطاقة الزبون المحدد ---------- */
+.glass{
+  background:var(--glass);border:1px solid var(--border);
+  border-radius:22px;padding:16px;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  margin-bottom:12px;
+}
+.sel-header{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.sel-name{font-size:22px;font-weight:700;}
+.sel-info{font-size:13px;margin-top:4px;}
+.close-btn{
+  background:none;border:none;color:var(--muted);
+  font-size:26px;cursor:pointer;padding:0 8px;line-height:1;
+}
+.buffer-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(110,231,255,0.15);color:var(--accent);
+  border-radius:8px;padding:4px 10px;font-size:12px;
+  margin-top:8px;
+}
+.buffer-chip button{
+  background:none;border:none;color:var(--accent);
+  font-size:16px;cursor:pointer;padding:0;line-height:1;
+}
+
+/* ---------- عناوين الأقسام ---------- */
+.sec-title{font-size:12px;color:var(--muted);margin:8px 4px 6px;font-weight:600;}
+
+/* ---------- شبكة الأزرار ---------- */
+.btn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px;}
+.btn-grid.two{grid-template-columns:repeat(2,1fr);}
+
+.amount-btn{
+  height:64px;border-radius:18px;border:1px solid rgba(110,231,255,0.35);
+  background:linear-gradient(135deg,rgba(110,231,255,0.9),rgba(124,92,255,0.9));
+  color:#000;font-family:'Cairo',sans-serif;font-size:22px;font-weight:900;
+  cursor:pointer;transition:transform .08s,filter .15s;
+  display:flex;align-items:center;justify-content:center;
+}
+.amount-btn:active{transform:scale(0.96);filter:brightness(1.1);}
+.amount-btn.green{
+  background:linear-gradient(135deg,rgba(43,214,123,0.9),rgba(110,231,255,0.85));
+}
+.amount-btn.purple{
+  background:linear-gradient(135deg,rgba(124,92,255,1),rgba(179,136,255,0.95));
+}
+.amount-btn.outline{
+  background:transparent;border:1px solid var(--border);color:var(--accent);
+  font-size:16px;font-weight:700;
+}
+
+/* صف الجمع */
+.buffer-row{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:8px;margin-bottom:12px;}
+.buffer-row button{
+  height:52px;border-radius:14px;font-family:'Cairo',sans-serif;
+  font-weight:700;font-size:15px;cursor:pointer;transition:transform .08s;
+}
+.buffer-row .add{background:transparent;border:1px solid var(--border);color:var(--accent);}
+.buffer-row .confirm{
+  background:linear-gradient(135deg,var(--green),var(--accent));
+  color:#000;font-weight:900;border:none;
+}
+.buffer-row button:active{transform:scale(0.96);}
+
+/* ---------- لوحة التحكم ---------- */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.stat-card{
+  background:var(--glass);border:1px solid var(--border);
+  border-radius:16px;padding:12px;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+.stat-label{font-size:11px;color:var(--muted);}
+.stat-value{font-size:20px;font-weight:900;margin-top:4px;}
+
+.fab{
+  position:fixed;bottom:20px;left:20px;
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;color:#000;font-size:28px;font-weight:900;
+  box-shadow:0 6px 24px rgba(124,92,255,0.5);
+  cursor:pointer;z-index:50;
+  display:flex;align-items:center;justify-content:center;
+}
+
+.back-btn{
+  background:var(--glass);border:1px solid var(--border);
+  color:var(--text);font-family:'Cairo',sans-serif;
+  font-size:16px;font-weight:700;padding:10px 18px;
+  border-radius:12px;margin-bottom:12px;cursor:pointer;
+}
+.back-btn:active{background:rgba(255,255,255,0.12);}
+
+/* ---------- Snackbar ---------- */
+#snackbar{
+  position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:linear-gradient(135deg,rgba(110,231,255,0.95),rgba(124,92,255,0.95));
+  color:#000;font-weight:700;padding:12px 20px;border-radius:14px;
+  font-size:14px;max-width:90%;text-align:center;
+  box-shadow:0 6px 24px rgba(0,0,0,0.4);
+  transition:transform .3s cubic-bezier(0.2,0.8,0.2,1);
+  z-index:100;pointer-events:none;
+}
+#snackbar.show{transform:translateX(-50%) translateY(0);}
+#snackbar.error{
+  background:linear-gradient(135deg,var(--red),#FF3B5C);
+  color:#fff;
+}
+
+/* ---------- Modal ---------- */
+.modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,0.7);
+  display:flex;align-items:center;justify-content:center;
+  z-index:200;padding:20px;
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+}
+.modal{
+  background:linear-gradient(180deg,#12141C,#0D1018);
+  border:1px solid var(--border);border-radius:22px;
+  padding:20px;width:100%;max-width:400px;
+}
+.modal h3{font-size:18px;margin-bottom:14px;font-weight:700;}
+.modal input{
+  width:100%;padding:14px;background:var(--glass);
+  border:1px solid var(--border);border-radius:12px;
+  color:var(--text);font-size:16px;font-family:'Cairo',sans-serif;
+  outline:none;margin-bottom:10px;
+}
+.modal input:focus{border-color:var(--accent);}
+.modal-actions{display:flex;gap:8px;margin-top:12px;}
+.modal-actions button{
+  flex:1;padding:12px;border-radius:12px;font-family:'Cairo',sans-serif;
+  font-size:15px;font-weight:700;cursor:pointer;border:none;
+}
+.modal-actions .primary{background:var(--accent);color:#000;}
+.modal-actions .secondary{background:transparent;border:1px solid var(--border);color:var(--text);}
+
+/* ---------- سجل العمليات ---------- */
+.tx-row{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;background:var(--glass);
+  border:1px solid var(--border);border-radius:12px;margin-bottom:6px;
+}
+.tx-type{font-size:13px;font-weight:600;}
+.tx-note{font-size:11px;color:var(--muted);margin-top:2px;}
+.tx-amount{font-size:15px;font-weight:700;text-align:left;}
+.tx-time{font-size:10px;color:var(--muted);text-align:left;margin-top:2px;}
+
+/* ---------- حالة فارغة ---------- */
+.empty{
+  text-align:center;color:var(--muted);
+  padding:40px 20px;font-size:14px;
+}
+
+/* ---------- Scrollbar مخفي ---------- */
+::-webkit-scrollbar{display:none;}
+</style>
+</head>
+<body>
+
+<!-- ================= الشاشة الرئيسية ================= -->
+<div id="screen-home">
+  <div class="logo-wrap" id="logo">
+    <div class="logo-title">راجو</div>
+    <div class="logo-sub">R A J O</div>
+  </div>
+
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="search"
+           placeholder="ابحث عن الزبون..." autocomplete="off">
+    <span class="search-icon">🔍</span>
+  </div>
+
+  <!-- قائمة الزبائن -->
+  <div id="list-view" class="list"></div>
+
+  <!-- لوحة الزبون المحدد -->
+  <div id="selected-view" class="hidden">
+    <div class="glass">
+      <div class="sel-header">
+        <div style="flex:1;min-width:0;">
+          <div class="sel-name" id="sel-name"></div>
+          <div class="sel-info" id="sel-info"></div>
+          <div id="sel-buffer"></div>
+        </div>
+        <button class="close-btn" onclick="clearSelection()">✕</button>
+      </div>
+    </div>
+
+    <div class="sec-title">تسجيل سريع — اضغط مباشرة</div>
+    <div class="btn-grid">
+      <button class="amount-btn" onclick="quickSale(1)">1 ₪</button>
+      <button class="amount-btn" onclick="quickSale(2)">2 ₪</button>
+      <button class="amount-btn" onclick="quickSale(3)">3 ₪</button>
+      <button class="amount-btn" onclick="quickSale(4)">4 ₪</button>
+      <button class="amount-btn" onclick="quickSale(5)">5 ₪</button>
+      <button class="amount-btn purple" onclick="openCustomModal('sale')">مبلغ آخر</button>
+    </div>
+
+    <div class="sec-title">جمع مبلغين ثم تأكيد</div>
+    <div class="buffer-row">
+      <button class="add" onclick="bufferAdd(2)">+ 2</button>
+      <button class="add" onclick="bufferAdd(3)">+ 3</button>
+      <button class="confirm" onclick="confirmBuffer()">تأكيد المجموع</button>
+    </div>
+
+    <div class="sec-title">دفعة من الزبون</div>
+    <div class="btn-grid">
+      <button class="amount-btn green" onclick="quickPay(5)">5 ₪</button>
+      <button class="amount-btn green" onclick="quickPay(10)">10 ₪</button>
+      <button class="amount-btn green" onclick="quickPay(20)">20 ₪</button>
+    </div>
+    <div class="btn-grid two">
+      <button class="amount-btn green" onclick="quickPay(50)">50 ₪</button>
+      <button class="amount-btn purple" onclick="openCustomModal('pay')">مبلغ آخر</button>
+    </div>
+    <div class="btn-grid two" style="margin-top:8px;">
+      <button class="amount-btn outline" onclick="undoLast()">↶ تراجع</button>
+      <button class="amount-btn outline" onclick="openCustomerHistory()">📋 سجل الزبون</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= شاشة لوحة التحكم ================= -->
+<div id="screen-dash" class="hidden">
+  <button class="back-btn" onclick="showHome()">→ رجوع</button>
+  <div class="logo-wrap compact" style="margin-bottom:14px;">
+    <div class="logo-title">لوحة التحكم</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-label">إجمالي الديون</div>
+      <div class="stat-value" id="st-debt" style="color:var(--red);">0 ₪</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">مدفوع مسبقًا</div>
+      <div class="stat-value" id="st-prepaid" style="color:var(--purple);">0 ₪</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">عدد الزبائن</div>
+      <div class="stat-value" id="st-count" style="color:var(--accent);">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">عمليات اليوم</div>
+      <div class="stat-value" id="st-today" style="color:var(--green);">0</div>
+    </div>
+  </div>
+
+  <div class="sec-title">الزبائن</div>
+  <div id="dash-list" class="list"></div>
+</div>
+
+<!-- ================= شاشة سجل الزبون ================= -->
+<div id="screen-history" class="hidden">
+  <button class="back-btn" onclick="backFromHistory()">→ رجوع</button>
+  <div class="logo-wrap compact" style="margin-bottom:14px;">
+    <div class="logo-title" id="hist-name">سجل الزبون</div>
+    <div class="logo-sub" id="hist-sub"></div>
+  </div>
+  <div id="hist-list"></div>
+</div>
+
+<!-- ================= FAB للوحة التحكم ================= -->
+<button class="fab hidden" id="fab" onclick="showDash()">⚙</button>
+
+<!-- ================= Snackbar ================= -->
+<div id="snackbar"></div>
+
+<script>
+/* ============================================================
+   Rajo — إدارة حسابات زبائن نقطة شحن الهواتف
+   التخزين: localStorage
+   ============================================================ */
+
+const LS_KEY = 'rajo_data_v1';
+
+/* ---------- حالة التطبيق ---------- */
+let state = {
+  customers: [],
+  transactions: []
+};
+
+let currentCustomerId = null;
+let bufferAmount = 0;
+let historyReturnTo = 'home';
+
+/* ---------- تحميل البيانات ---------- */
+function loadState() {
+  const raw = localStorage.getItem(LS_KEY);
+  if (raw) {
+    try {
+      state = JSON.parse(raw);
+      if (!state.customers) state.customers = [];
+      if (!state.transactions) state.transactions = [];
+      return;
+    } catch (e) {}
+  }
+  // بيانات تجريبية: 100 زبون
+  state = generateSeed();
+  saveState();
+}
+
+function saveState() {
+  localStorage.setItem(LS_KEY, JSON.stringify(state));
+}
+
+/* ---------- بيانات تجريبية ---------- */
+function generateSeed() {
+  const firstNames = ['أحمد','محمد','محمود','خالد','عمر','يوسف','علي','حسن','حسين','سامي',
+    'سعيد','طلال','فادي','نادر','رامي','زياد','بسام','مازن','نبيل','عادل',
+    'كريم','وليد','أنس','إياد','معاذ','بشار','جهاد','أيمن','فيصل','مروان',
+    'ليلى','سارة','هبة','ريم','نور','دانة','لينا','مريم','رنا','أمل',
+    'سماح','وفاء','إيمان','رشا','دعاء','هالة','نجلاء','عبير','بشرى','سناء'];
+  const lastNames = ['الحسن','عبد الله','الخالدي','النعيمي','الأحمد','الزعبي','الشامي',
+    'الحلبي','الدمشقي','القاسم','العلي','الرفاعي','الحاج','إبراهيم',
+    'السيد','المصري','الجابري','العمري','الصالح','الفارس'];
+
+  const out = { customers: [], transactions: [] };
+  const rnd = mulberry32(42);
+  for (let i = 0; i < 100; i++) {
+    const name = firstNames[Math.floor(rnd()*firstNames.length)] + ' ' +
+                 lastNames[Math.floor(rnd()*lastNames.length)];
+    const limits = [10, 15, 20, 25, 30, 50];
+    const limit = limits[Math.floor(rnd()*limits.length)];
+    const r = rnd();
+    let debt = 0;
+    if (r < 0.2) debt = 0;
+    else if (r < 0.45) debt = rnd() * limit * 0.5;
+    else if (r < 0.75) debt = limit * 0.5 + rnd() * limit * 0.4;
+    else if (r < 0.9) debt = limit;
+    const prepaid = rnd() < 0.15 ? Math.round(rnd()*15*100)/100 : 0;
+
+    out.customers.push({
+      id: i + 1,
+      name: name,
+      phone: '05' + Math.floor(10000000 + rnd()*89999999),
+      debtLimit: limit,
+      currentDebt: Math.round(debt*100)/100,
+      prepaidBalance: prepaid,
+      active: true,
+      createdAt: Date.now() - Math.floor(rnd()*90*24*3600*1000)
+    });
+  }
+  return out;
+}
+
+/* مولّد أرقام عشوائية حتمي */
+function mulberry32(a) {
+  return function() {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  }
+}
+
+/* ---------- أدوات ---------- */
+function fmt(v) {
+  if (v === 0) return '0';
+  if (Number.isInteger(v)) return v.toString();
+  return v.toFixed(2);
+}
+function round2(v) { return Math.round(v*100)/100; }
+
+function statusOf(c) {
+  if (c.prepaidBalance > 0) return 'purple';
+  if (c.debtLimit > 0 && c.currentDebt >= c.debtLimit) return 'red';
+  if (c.debtLimit > 0 && c.currentDebt >= c.debtLimit * 0.8) return 'orange';
+  return 'green';
+}
+
+function statusLabel(c) {
+  const s = statusOf(c);
+  if (s === 'purple') return 'رصيد مدفوع مسبقًا';
+  if (s === 'red') return 'وصل إلى سقف الدين';
+  if (s === 'orange') return 'اقترب من سقف الدين';
+  return 'وضع طبيعي';
+}
+
+function statusColor(c) {
+  const s = statusOf(c);
+  if (s === 'purple') return 'var(--purple)';
+  if (s === 'red') return 'var(--red)';
+  if (s === 'orange') return 'var(--orange)';
+  return 'var(--green)';
+}
+
+function getCustomer(id) { return state.customers.find(x => x.id === id); }
+
+/* ---------- Snackbar ---------- */
+let snackTimer;
+function snack(msg, isError = false) {
+  const el = document.getElementById('snackbar');
+  el.textContent = msg;
+  el.className = isError ? 'show error' : 'show';
+  clearTimeout(snackTimer);
+  snackTimer = setTimeout(() => { el.className = isError ? 'error' : ''; }, 2800);
+}
+
+/* ---------- عرض الشاشات ---------- */
+function showHome() {
+  document.getElementById('screen-home').classList.remove('hidden');
+  document.getElementById('screen-dash').classList.add('hidden');
+  document.getElementById('screen-history').classList.add('hidden');
+  document.getElementById('fab').classList.remove('hidden');
+  refreshList();
+  refreshSelected();
+}
+
+function showDash() {
+  document.getElementById('screen-home').classList.add('hidden');
+  document.getElementById('screen-dash').classList.remove('hidden');
+  document.getElementById('screen-history').classList.add('hidden');
+  document.getElementById('fab').classList.add('hidden');
+  refreshDash();
+}
+
+function backFromHistory() {
+  document.getElementById('screen-history').classList.add('hidden');
+  if (historyReturnTo === 'dash') showDash();
+  else showHome();
+}
+
+/* ---------- البحث ---------- */
+const searchInput = document.getElementById('search');
+searchInput.addEventListener('input', () => {
+  refreshList();
+  if (searchInput.value.length === 0 && !currentCustomerId) {
+    document.getElementById('logo').classList.remove('compact');
+  }
+});
+
+/* ---------- قائمة الزبائن ---------- */
+function refreshList() {
+  const q = searchInput.value.trim();
+  const list = document.getElementById('list-view');
+  let items;
+  if (q === '') {
+    items = state.customers.filter(c => c.active).slice(0, 60);
+  } else {
+    items = state.customers.filter(c => c.active && c.name.includes(q)).slice(0, 60);
+  }
+
+  if (items.length === 0) {
+    list.innerHTML = '<div class="empty">لا نتائج مطابقة</div>';
+    return;
+  }
+
+  list.innerHTML = items.map(c => {
+    const color = statusOf(c);
+    let sub, amountText, amountColor;
+    if (c.prepaidBalance > 0) {
+      sub = 'رصيد مسبق: ' + fmt(c.prepaidBalance) + ' ₪';
+      amountText = '0 ₪';
+      amountColor = statusColor(c);
+    } else if (c.currentDebt > 0) {
+      sub = 'سقف: ' + fmt(c.debtLimit) + ' ₪';
+      amountText = fmt(c.currentDebt) + ' ₪';
+      amountColor = statusColor(c);
+    } else {
+      sub = 'لا يوجد رصيد';
+      amountText = '0 ₪';
+      amountColor = statusColor(c);
+    }
+    return `
+      <div class="cust-row" onclick="selectCustomer(${c.id})">
+        <div class="dot ${color}"></div>
+        <div class="cust-info">
+          <div class="cust-name">${c.name}</div>
+          <div class="cust-sub">${sub}</div>
+        </div>
+        <div class="cust-amount" style="color:${amountColor}">${amountText}</div>
+      </div>`;
+  }).join('');
+}
+
+/* ---------- اختيار زبون ---------- */
+function selectCustomer(id) {
+  currentCustomerId = id;
+  bufferAmount = 0;
+  document.getElementById('logo').classList.add('compact');
+  document.getElementById('list-view').classList.add('hidden');
+  document.getElementById('selected-view').classList.remove('hidden');
+  document.getElementById('search').value = '';
+  refreshSelected();
+}
+
+function clearSelection() {
+  currentCustomerId = null;
+  bufferAmount = 0;
+  document.getElementById('list-view').classList.remove('hidden');
+  document.getElementById('selected-view').classList.add('hidden');
+  document.getElementById('logo').classList.remove('compact');
+  refreshList();
+}
+
+function refreshSelected() {
+  if (!currentCustomerId) return;
+  const c = getCustomer(currentCustomerId);
+  if (!c) { clearSelection(); return; }
+
+  document.getElementById('sel-name').textContent = c.name;
+  let info = '';
+  if (c.prepaidBalance > 0) {
+    info = 'رصيد مسبق: ' + fmt(c.prepaidBalance) + ' ₪';
+  } else {
+    info = 'المستحق: ' + fmt(c.currentDebt) + ' ₪ / السقف: ' + fmt(c.debtLimit) + ' ₪';
+  }
+  const infoEl = document.getElementById('sel-info');
+  infoEl.textContent = info;
+  infoEl.style.color = statusColor(c);
+
+  const buf = document.getElementById('sel-buffer');
+  if (bufferAmount > 0) {
+    buf.innerHTML = `<div class="buffer-chip">قيد الجمع: ${fmt(bufferAmount)} ₪
+      <button onclick="clearBuffer()">✕</button></div>`;
+  } else {
+    buf.innerHTML = '';
+  }
+}
+
+/* ============================================================
+   منطق العمليات
+   ============================================================ */
+
+function quickSale(amount) {
+  if (!currentCustomerId) return;
+  const c = getCustomer(currentCustomerId);
+  if (!c) return;
+  const sum = bufferAmount + amount;
+  doSale(c, sum);
+  bufferAmount = 0;
+}
+
+function bufferAdd(amount) {
+  bufferAmount += amount;
+  refreshSelected();
+  snack('قيد الجمع: ' + fmt(bufferAmount) + ' ₪');
+}
+
+function clearBuffer() {
+  bufferAmount = 0;
+  refreshSelected();
+}
+
+function confirmBuffer() {
+  if (bufferAmount <= 0) { snack('لم تُضف أي مبالغ بعد', true); return; }
+  if (!currentCustomerId) return;
+  const c = getCustomer(currentCustomerId);
+  doSale(c, bufferAmount);
+  bufferAmount = 0;
+}
+
+function doSale(c, amount) {
+  if (amount <= 0) { snack('المبلغ غير صالح', true); return; }
+
+  let remaining = amount;
+  let newPrepaid = c.prepaidBalance;
+  let newDebt = c.currentDebt;
+  let prepaidUsed = 0;
+
+  // 1) خصم من الرصيد المسبق
+  if (newPrepaid > 0) {
+    prepaidUsed = Math.min(newPrepaid, remaining);
+    newPre
